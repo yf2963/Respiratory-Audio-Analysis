@@ -1,0 +1,133 @@
+<html>
+<head>
+<title>Phase_2.ipynb</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #7a7e85;}
+.s1 { color: #bcbec4;}
+.s2 { color: #cf8e6d;}
+.s3 { color: #bcbec4;}
+.s4 { color: #6aab73;}
+.s5 { color: #2aacb8;}
+</style>
+</head>
+<body bgcolor="#1e1f22">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#606060" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+Phase_2.ipynb</font>
+</center></td></tr></table>
+<pre><span class="s0">#%% md 
+</span><span class="s1"># Phase 2 Notebook 
+</span><span class="s0">#%% 
+</span><span class="s2">import </span><span class="s1">helperFunctions</span>
+<span class="s2">import </span><span class="s1">warnings</span>
+<span class="s1">warnings</span><span class="s3">.</span><span class="s1">filterwarnings</span><span class="s3">(</span><span class="s4">'ignore'</span><span class="s3">)</span>
+<span class="s2">import </span><span class="s1">tensorflow</span><span class="s3">.</span><span class="s1">keras</span><span class="s3">.</span><span class="s1">utils </span><span class="s2">as </span><span class="s1">kutil</span>
+<span class="s0">#%% md 
+</span><span class="s1">## Step 1: Data Importing 
+This step creates a dataframe with start, end, (cycle start end) crackles, wheezes, pid, and filename 
+</span><span class="s0">#%% 
+</span><span class="s1">completeData </span><span class="s3">= </span><span class="s1">helperFunctions</span><span class="s3">.</span><span class="s1">getCompleteData</span><span class="s3">()</span>
+<span class="s1">completeData</span>
+<span class="s0">#%% md 
+</span><span class="s1">## Step 2: Data Preprocessing 
+This step splits the audio into cycles and updates the dataframe with the new filenames. In order to split up audio, we must choose a standard length for all audio samples, however a sample too large would be difficult to process and a sample too small may eliminate too much data. We chose 6 seconds as a standard length for all audio samples (see figure). 
+</span><span class="s0">#%% 
+</span><span class="s1">helperFunctions</span><span class="s3">.</span><span class="s1">getCycleGraph</span><span class="s3">(</span><span class="s1">completeData</span><span class="s3">, </span><span class="s1">maxLength</span><span class="s3">=</span><span class="s5">6</span><span class="s3">)</span>
+<span class="s0">#%% 
+# this will take a long time (~20 minutes)</span>
+<span class="s1">splitData </span><span class="s3">= </span><span class="s1">helperFunctions</span><span class="s3">.</span><span class="s1">getSplitData</span><span class="s3">(</span><span class="s1">completeData</span><span class="s3">, </span><span class="s1">maxLength</span><span class="s3">=</span><span class="s5">6</span><span class="s3">)</span>
+<span class="s1">splitData</span>
+<span class="s0">#%% md 
+</span><span class="s1">## Step 3: Data Categorization and Division 
+this step adds categories to each cycle based on the presence of crackles and wheezes. The categories are as follows: none, crackles only, wheezes only, and both crackles and wheezes. The categories are added to the dataframe as a new column. Furthermore, the data is divided into training and testing sets based on each category. As seen in the &quot;Category Distribution&quot; figure, the dataset is imbalanced. 
+</span><span class="s0">#%% 
+</span><span class="s1">categorizedData </span><span class="s3">= </span><span class="s1">helperFunctions</span><span class="s3">.</span><span class="s1">getCategorizedData</span><span class="s3">(</span><span class="s1">splitData</span><span class="s3">)</span>
+<span class="s1">categorizedData</span>
+<span class="s0">#%% 
+</span><span class="s1">trainData</span><span class="s3">, </span><span class="s1">testData </span><span class="s3">= </span><span class="s1">helperFunctions</span><span class="s3">.</span><span class="s1">getTestTrainSplit</span><span class="s3">(</span><span class="s1">categorizedData</span><span class="s3">, </span><span class="s1">testSize</span><span class="s3">=</span><span class="s5">0.2</span><span class="s3">)</span>
+<span class="s0">#%% md 
+</span><span class="s1">## Step 4: Feature Extraction 
+This creates CNN models for three different features, MFCC, STFT, and Mel-Spectrogram which are all ways of compressing audio information. Furthermore, this step creates a dense network, combining all three features into a singular model 
+</span><span class="s0">#%% md 
+</span><span class="s1">### Step 4.1: Mel-Frequency Cepstral Coefficients (MFCC) 
+</span><span class="s0">#%% 
+</span><span class="s1">mfccModel</span><span class="s3">, </span><span class="s1">mfccTrain</span><span class="s3">, </span><span class="s1">mfccTest </span><span class="s3">= </span><span class="s1">helperFunctions</span><span class="s3">.</span><span class="s1">getMFCCModel</span><span class="s3">(</span><span class="s1">trainData</span><span class="s3">, </span><span class="s1">testData</span><span class="s3">)</span>
+<span class="s0">#%% 
+</span><span class="s1">helperFunctions</span><span class="s3">.</span><span class="s1">createMFCCPlot</span><span class="s3">(</span><span class="s1">mfccTrain</span><span class="s3">, </span><span class="s1">index</span><span class="s3">=</span><span class="s5">420</span><span class="s3">)</span>
+<span class="s0">#%% 
+</span><span class="s1">mfccModel</span><span class="s3">.</span><span class="s1">summary</span><span class="s3">()</span>
+<span class="s0">#%% 
+</span><span class="s1">kutil</span><span class="s3">.</span><span class="s1">plot_model</span><span class="s3">(</span><span class="s1">mfccModel</span><span class="s3">, </span><span class="s4">'mfcc.png'</span><span class="s3">, </span><span class="s1">show_shapes</span><span class="s3">=</span><span class="s2">True</span><span class="s3">)</span>
+<span class="s0">#%% md 
+</span><span class="s1">### Step 4.2: Short-Time Fourier Transform (STFT) 
+</span><span class="s0">#%% 
+</span><span class="s1">stftModel</span><span class="s3">, </span><span class="s1">stftTrain</span><span class="s3">, </span><span class="s1">stftTest </span><span class="s3">= </span><span class="s1">helperFunctions</span><span class="s3">.</span><span class="s1">getSTFTModel</span><span class="s3">(</span><span class="s1">trainData</span><span class="s3">, </span><span class="s1">testData</span><span class="s3">)</span>
+<span class="s0">#%% 
+</span><span class="s1">helperFunctions</span><span class="s3">.</span><span class="s1">createSTFTPlot</span><span class="s3">(</span><span class="s1">stftTrain</span><span class="s3">, </span><span class="s1">index</span><span class="s3">=</span><span class="s5">420</span><span class="s3">)</span>
+<span class="s0">#%% 
+</span><span class="s1">stftModel</span><span class="s3">.</span><span class="s1">summary</span><span class="s3">()</span>
+<span class="s0">#%% 
+</span><span class="s1">kutil</span><span class="s3">.</span><span class="s1">plot_model</span><span class="s3">(</span><span class="s1">stftModel</span><span class="s3">, </span><span class="s4">'stft.png'</span><span class="s3">, </span><span class="s1">show_shapes</span><span class="s3">=</span><span class="s2">True</span><span class="s3">)</span>
+<span class="s0">#%% md 
+</span><span class="s1">### Step 4.3: Mel-Spectrogram 
+</span><span class="s0">#%% 
+</span><span class="s1">melModel</span><span class="s3">, </span><span class="s1">melTrain</span><span class="s3">, </span><span class="s1">melTest </span><span class="s3">= </span><span class="s1">helperFunctions</span><span class="s3">.</span><span class="s1">getMELModel</span><span class="s3">(</span><span class="s1">trainData</span><span class="s3">, </span><span class="s1">testData</span><span class="s3">)</span>
+<span class="s0">#%% 
+</span><span class="s1">helperFunctions</span><span class="s3">.</span><span class="s1">createMELPlot</span><span class="s3">(</span><span class="s1">melTrain</span><span class="s3">, </span><span class="s1">index</span><span class="s3">=</span><span class="s5">420</span><span class="s3">)</span>
+<span class="s0">#%% 
+</span><span class="s1">melModel</span><span class="s3">.</span><span class="s1">summary</span><span class="s3">()</span>
+<span class="s0">#%% 
+</span><span class="s1">kutil</span><span class="s3">.</span><span class="s1">plot_model</span><span class="s3">(</span><span class="s1">melModel</span><span class="s3">, </span><span class="s4">'mel.png'</span><span class="s3">, </span><span class="s1">show_shapes</span><span class="s3">=</span><span class="s2">True</span><span class="s3">)</span>
+<span class="s0">#%% md 
+</span><span class="s1">### Step 4.4: Dense Network 
+</span><span class="s0">#%% 
+</span><span class="s1">denseModel </span><span class="s3">= </span><span class="s1">helperFunctions</span><span class="s3">.</span><span class="s1">getDenseModel</span><span class="s3">(</span><span class="s1">mfccModel</span><span class="s3">, </span><span class="s1">stftModel</span><span class="s3">, </span><span class="s1">melModel</span><span class="s3">)</span>
+<span class="s0">#%% 
+</span><span class="s1">denseModel</span><span class="s3">.</span><span class="s1">summary</span><span class="s3">()</span>
+<span class="s0">#%% 
+</span><span class="s1">kutil</span><span class="s3">.</span><span class="s1">plot_model</span><span class="s3">(</span><span class="s1">denseModel</span><span class="s3">, </span><span class="s4">'dense.png'</span><span class="s3">, </span><span class="s1">show_shapes</span><span class="s3">=</span><span class="s2">True</span><span class="s3">)</span>
+<span class="s0">#%% md 
+</span>
+<span class="s0">#%% md 
+</span>
+<span class="s0">#%% md 
+</span><span class="s1">## Step 5: Data Training 
+This step uses the models created in step 4 and trains them on the training data. The training data is then tested on the testing data and the results are plotted. Figures showing the accuracy and loss of each model are shown below. 
+</span><span class="s0">#%% 
+</span><span class="s1">dtr</span><span class="s3">, </span><span class="s1">dte </span><span class="s3">= </span><span class="s1">helperFunctions</span><span class="s3">.</span><span class="s1">encode</span><span class="s3">(</span><span class="s1">trainData</span><span class="s3">.</span><span class="s1">category</span><span class="s3">, </span><span class="s1">testData</span><span class="s3">.</span><span class="s1">category</span><span class="s3">)</span>
+<span class="s0">#%% md 
+</span><span class="s1">### Step 5.1: MFCC 
+</span><span class="s0">#%% 
+</span><span class="s1">mfccModel</span><span class="s3">, </span><span class="s1">mfccHistory </span><span class="s3">= </span><span class="s1">helperFunctions</span><span class="s3">.</span><span class="s1">trainModel</span><span class="s3">(</span><span class="s1">mfccModel</span><span class="s3">, </span><span class="s1">dtr</span><span class="s3">, </span><span class="s1">dte</span><span class="s3">, </span><span class="s1">mfccTrain</span><span class="s3">, </span><span class="s1">mfccTest</span><span class="s3">)</span>
+<span class="s0">#%% 
+</span><span class="s1">helperFunctions</span><span class="s3">.</span><span class="s1">plotModel</span><span class="s3">(</span><span class="s1">mfccHistory</span><span class="s3">, </span><span class="s5">5</span><span class="s3">)</span>
+<span class="s0">#%% 
+</span><span class="s1">mfccModel</span><span class="s3">.</span><span class="s1">evaluate</span><span class="s3">(</span><span class="s1">mfccTest</span><span class="s3">, </span><span class="s1">dte</span><span class="s3">)</span>
+<span class="s0">#%% md 
+</span><span class="s1">### Step 5.2: STFT 
+</span><span class="s0">#%% 
+</span><span class="s1">stftModel</span><span class="s3">, </span><span class="s1">stftHistory </span><span class="s3">= </span><span class="s1">helperFunctions</span><span class="s3">.</span><span class="s1">trainModel</span><span class="s3">(</span><span class="s1">stftModel</span><span class="s3">, </span><span class="s1">dtr</span><span class="s3">, </span><span class="s1">dte</span><span class="s3">, </span><span class="s1">stftTrain</span><span class="s3">, </span><span class="s1">stftTest</span><span class="s3">)</span>
+<span class="s0">#%% 
+</span><span class="s1">helperFunctions</span><span class="s3">.</span><span class="s1">plotModel</span><span class="s3">(</span><span class="s1">stftHistory</span><span class="s3">, </span><span class="s5">5</span><span class="s3">)</span>
+<span class="s0">#%% 
+</span><span class="s1">stftModel</span><span class="s3">.</span><span class="s1">evaluate</span><span class="s3">(</span><span class="s1">stftTest</span><span class="s3">, </span><span class="s1">dte</span><span class="s3">)</span>
+<span class="s0">#%% md 
+</span><span class="s1">### Step 5.3: Mel 
+</span><span class="s0">#%% 
+</span><span class="s1">melModel</span><span class="s3">, </span><span class="s1">melHistory </span><span class="s3">= </span><span class="s1">helperFunctions</span><span class="s3">.</span><span class="s1">trainModel</span><span class="s3">(</span><span class="s1">melModel</span><span class="s3">, </span><span class="s1">dtr</span><span class="s3">, </span><span class="s1">dte</span><span class="s3">, </span><span class="s1">melTrain</span><span class="s3">, </span><span class="s1">melTest</span><span class="s3">)</span>
+<span class="s0">#%% 
+</span><span class="s1">helperFunctions</span><span class="s3">.</span><span class="s1">plotModel</span><span class="s3">(</span><span class="s1">melHistory</span><span class="s3">, </span><span class="s5">3</span><span class="s3">)</span>
+<span class="s0">#%% 
+</span><span class="s1">melModel</span><span class="s3">.</span><span class="s1">evaluate</span><span class="s3">(</span><span class="s1">melTest</span><span class="s3">, </span><span class="s1">dte</span><span class="s3">)</span>
+<span class="s0">#%% md 
+</span><span class="s1">### Step 5.4: Dense 
+</span><span class="s0">#%% 
+</span><span class="s1">denseModel</span><span class="s3">, </span><span class="s1">denseHistory </span><span class="s3">= </span><span class="s1">helperFunctions</span><span class="s3">.</span><span class="s1">trainModel</span><span class="s3">(</span><span class="s1">denseModel</span><span class="s3">, </span><span class="s1">dtr</span><span class="s3">, </span><span class="s1">dte</span><span class="s3">, [</span><span class="s1">mfccTrain</span><span class="s3">, </span><span class="s1">stftTrain</span><span class="s3">, </span><span class="s1">melTrain</span><span class="s3">], [</span><span class="s1">mfccTest</span><span class="s3">, </span><span class="s1">stftTest</span><span class="s3">, </span><span class="s1">melTest</span><span class="s3">])</span>
+<span class="s0">#%% 
+</span><span class="s1">helperFunctions</span><span class="s3">.</span><span class="s1">plotModel</span><span class="s3">(</span><span class="s1">denseHistory</span><span class="s3">, </span><span class="s5">1.5</span><span class="s3">)</span>
+<span class="s0">#%% 
+</span><span class="s1">denseModel</span><span class="s3">.</span><span class="s1">evaluate</span><span class="s3">([</span><span class="s1">mfccTest</span><span class="s3">, </span><span class="s1">stftTest</span><span class="s3">, </span><span class="s1">melTest</span><span class="s3">], </span><span class="s1">dte</span><span class="s3">)</span></pre>
+</body>
+</html>
