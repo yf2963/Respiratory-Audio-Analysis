@@ -78,12 +78,14 @@ This step creates a dataframe with start, end, (cycle start end) crackles, wheez
 ![image](https://github.com/user-attachments/assets/5a3f4ede-7b09-4b72-9bcc-014a38d19eed)
 
 ## Step 2: Data Preprocessing
-This step splits the audio into cycles and updates the dataframe with the new filenames. In order to split up audio, we must choose a standard length for all audio samples, however a sample too large would be difficult to process and a sample too small may eliminate too much data. We chose 6 seconds as a standard length for all audio samples.
+This step splits the audio into cycles and updates the dataframe with the new filenames. In order to split up audio, we must choose a standard length for all audio samples, however a sample too large would be difficult to process and a sample too small may eliminate too much data. We chose 6 seconds as a standard length for all audio samples (see figure).
 
-98.27 percent of cycles are less than 6 seconds long
+![image](https://github.com/user-attachments/assets/52a26549-e271-41f4-aac3-60ade46168a8)
 
 ## Step 3: Data Categorization and Division
 This step adds categories to each cycle based on the presence of crackles and wheezes. The categories are as follows: none, crackles only, wheezes only, and both crackles and wheezes. The categories are added to the dataframe as a new column. Furthermore, the data is divided into training and testing sets based on each category. As seen in the "Category Distribution" figure, the dataset is imbalanced.
+
+![image](https://github.com/user-attachments/assets/58bb9437-e899-4dba-ae49-89b55b9045aa)
 
 ## Step 4: Feature Extraction and Modeling
 This creates CNN and RNN models for three different features, MFCC, STFT, and Mel-Spectrogram which are all ways of compressing audio information. Furthermore, this step creates a dense network, combining all three features into a singular CNN and RNN models.
