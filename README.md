@@ -132,12 +132,18 @@ This step uses the models created in step 4 and trains them on the training data
 ![image](https://github.com/user-attachments/assets/d96b6a7c-c6ad-4cd1-8f56-8670499bf09b)
 
 #### Step 5.4.2: Dense RNN
-Loss: 1.0435
-Accuracy: 0.5616
+![image](https://github.com/user-attachments/assets/6b5e4986-bc04-420d-97f8-dcd533531fd0)
+
+![image](https://github.com/user-attachments/assets/bb7296cc-e505-4cbc-89f7-efa422392309)
+
+![image](https://github.com/user-attachments/assets/4b75b65c-467b-457c-9747-7e2d2ab3f8ac)
 
 #### Step 5.4.3: Dense Combined
-Loss: 0.8584
-Accuracy: 0.7080
+![image](https://github.com/user-attachments/assets/6e9f6dea-d56a-4b15-9966-0051c24d1e5a)
+
+![image](https://github.com/user-attachments/assets/6fd79b5e-ab87-4d43-843d-976062476e78)
+
+![image](https://github.com/user-attachments/assets/00d44e34-18ca-4afe-8ccc-ae97f705368a)
 
 ## Conclusion
 When running each feature individually both RNN and CNN perform similarly between around 50-60% accuracy. When combining all three features and running Dense CNN and Dense RNN, we see quite different results. CNN performs significantly better at 68% accuracy whereas RNN doesn't see any improvement at 56%. Taking a look at the classification metrics of Dense RNN, we see an empty 'Both' class. This is due to overfitting of our features as we don't have enough audio samples where both crackles and wheezes are present which explains the difference in loss incurred by RNN when comparing it to Dense CNN and Dense Combined.
@@ -151,3 +157,12 @@ Our attempt at resolving this issue by simple oversampling the data to have equa
 2. **Hyperparameter Tuning**: Optimizing hyperparameters is another important area for improvement. By systematically experimenting with various combinations of learning rates, dropout rates, and number of layers, we can fine-tune our models to achieve better performance. Hyperparameter tuning can be especially impactful in deep learning models like CNNs, where small adjustments can lead to significant changes in model efficacy.
 
 3. **Enhanced Data Cleaning and Preprocessing**: Further refining our data cleaning and preprocessing steps can also contribute to model improvement. Techniques such as data smoothing can help in reducing noise and making patterns in the data more discernible for the models. This step is particularly important in the context of lung pathology classification, where subtle differences in audio patterns can be indicative of different conditions.
+   
+## References
+
+1. Gurung, A., Scrafford, C. G., Tielsch, J. M., Levine, O. S., & Checkley, W. (2011). Computerized lung sound analysis as diagnostic aid for the detection of abnormal lung sounds: A systematic review and meta-analysis. *Respiratory Medicine*, *105*(9), 1396–1403. https://doi.org/10.1016/j.rmed.2011.05.007
+
+2. Rao, A., Huynh, E., Royston, T. J., Kornblith, A., & Roy, S. (2019). Acoustic Methods for Pulmonary Diagnosis. *IEEE Reviews in Biomedical Engineering*, *12*, 221–239. https://doi.org/10.1109/RBME.2018.2874353
+
+3. Palaniappan, R., Sundaraj, K., & Sundaraj, S. (2014). A comparative study of the svm and k-nn machine learning algorithms for the diagnosis of respiratory pathologies using pulmonary acoustic signals. *BMC Bioinformatics*, *15*(1), 223–223. https://doi.org/10.1186/1471-2105-15-223
+
