@@ -70,7 +70,7 @@ It's important to establish reliable metrics for evaluating the effectiveness of
 
 During the training phase, the loss function employed was sparse categorical cross-entropy. This choice is good for multi-class categorization scenarios as it evaluates the accuracy of the model by comparing the actual categorization (ground truth) against the predicted probability distribution across all classes. This loss function is important in fine-tuning the models, especially in complex tasks like lung pathology classification, where the distinction between different categories is subtle yet critical for accurate diagnosis.
 
-# Results and Discussion
+## Results and Discussion
 
 ## Step 1: Data Importing
 This step creates a dataframe with start, end, (cycle start end) crackles, wheezes, pid, and filename
