@@ -111,7 +111,7 @@ This step uses the models created in step 4 and trains them on the training data
 
 ### Step 5.2: STFT
 #### Step 5.2.1: STFT CNN
-![image](https://github.com/user-attachments/assets/18b8b857-296e-4bae-aad3-f031401fef9e)
+![image](https://github.com/user-attachments/assets/b53d200a-6c4d-4fad-ac6b-f25d91ced6cb)
 
 #### Step 5.2.2: STFT RNN
 ![image](https://github.com/user-attachments/assets/a2b3cdde-6d34-4aec-8256-87d104e64631)
@@ -125,8 +125,11 @@ This step uses the models created in step 4 and trains them on the training data
 
 ### Step 5.4: Dense
 #### Step 5.4.1: Dense CNN
-Loss: 0.8178
-Accuracy: 0.6841
+![image](https://github.com/user-attachments/assets/9ce93ee6-dbec-4ad2-a382-d4b44c69d5d7)
+
+![image](https://github.com/user-attachments/assets/e3c84dcc-7b3b-4726-95ca-541cbeb08697)
+
+![image](https://github.com/user-attachments/assets/d96b6a7c-c6ad-4cd1-8f56-8670499bf09b)
 
 #### Step 5.4.2: Dense RNN
 Loss: 1.0435
