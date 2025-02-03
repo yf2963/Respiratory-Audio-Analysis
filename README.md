@@ -1,5 +1,3 @@
-# Final Report
-
 ## Introduction
 Lung auscultation, the process of listening to breath sounds, requires subjective decision making by clinicians. Auscultation is used as best practice for diagnosing a series of lung pathologies including pneumonia, pulmonary edema, pleural effusion and others. While traditional stethoscopes have proven effective for listening to the lungs, electronic stethoscopes and other modes of listening are becoming increasingly popular. The introduction of electronic auscultation opens the door for intelligent listening models that can assist clinicians during their diagnostic process. To assist in the detection of lung pathologies, the aim is to leverage machine learning and data analytics to detect crackles and wheezes in breathing. The detection of these features in breathing will assist in finding which patients, from a large set, need further examination for potential pathologies.
 
