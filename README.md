@@ -91,13 +91,13 @@ This step adds categories to each cycle based on the presence of crackles and wh
 This creates CNN and RNN models for three different features, MFCC, STFT, and Mel-Spectrogram which are all ways of compressing audio information. Furthermore, this step creates a dense network, combining all three features into a singular CNN and RNN models.
 
 ### Step 4.1: Mel-Frequency Cepstral Coefficients (MFCC)
-[MFCC visualization details]
+![image](https://github.com/user-attachments/assets/3d3eaf45-f749-40bd-a80c-e7ab0bb785ae)
 
 ### Step 4.2: Short-Time Fourier Transform (STFT)
-[STFT visualization details]
+![image](https://github.com/user-attachments/assets/fcb926fc-7139-4eb0-8053-e8a394867e48)
 
 ### Step 4.3: Mel-Spectrogram
-[Mel-Spectrogram visualization details]
+![image](https://github.com/user-attachments/assets/a1f45d2f-5adb-4a42-8603-dbb478602ca6)
 
 ## Step 5: Data Training
 This step uses the models created in step 4 and trains them on the training data. The training data is then tested on the testing data and the results are plotted.
