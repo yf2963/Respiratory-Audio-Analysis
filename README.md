@@ -75,6 +75,8 @@ During the training phase, the loss function employed was sparse categorical cro
 ## Step 1: Data Importing
 This step creates a dataframe with start, end, (cycle start end) crackles, wheezes, pid, and filename
 
+![image](https://github.com/user-attachments/assets/5a3f4ede-7b09-4b72-9bcc-014a38d19eed)
+
 ## Step 2: Data Preprocessing
 This step splits the audio into cycles and updates the dataframe with the new filenames. In order to split up audio, we must choose a standard length for all audio samples, however a sample too large would be difficult to process and a sample too small may eliminate too much data. We chose 6 seconds as a standard length for all audio samples.
 
