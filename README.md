@@ -100,34 +100,28 @@ This creates CNN and RNN models for three different features, MFCC, STFT, and Me
 ![image](https://github.com/user-attachments/assets/a1f45d2f-5adb-4a42-8603-dbb478602ca6)
 
 ## Step 5: Data Training
-This step uses the models created in step 4 and trains them on the training data. The training data is then tested on the testing data and the results are plotted.
+This step uses the models created in step 4 and trains them on the training data. The training data is then tested on the testing data and the results are plotted. Figures showing the accuracy and loss of each model are shown below.
 
 ### Step 5.1: MFCC
 #### Step 5.1.1: MFCC CNN
-Loss: 0.9992
-Accuracy: 0.5855
+![image](https://github.com/user-attachments/assets/1612c521-b8b9-4c3d-a95b-d44732941b8b)
 
 #### Step 5.1.2: MFCC RNN
-Loss: 1.0413
-Accuracy: 0.5746
+![image](https://github.com/user-attachments/assets/5e7f87d4-998c-4876-a4bc-bcbda143ab69)
 
 ### Step 5.2: STFT
 #### Step 5.2.1: STFT CNN
-Loss: 1.1442
-Accuracy: 0.5283
+![image](https://github.com/user-attachments/assets/18b8b857-296e-4bae-aad3-f031401fef9e)
 
 #### Step 5.2.2: STFT RNN
-Loss: 1.0234
-Accuracy: 0.5522
+![image](https://github.com/user-attachments/assets/a2b3cdde-6d34-4aec-8256-87d104e64631)
 
 ### Step 5.3: Mel
 #### Step 5.3.1: Mel-Spectrogram CNN
-Loss: 1.1045
-Accuracy: 0.5326
+![image](https://github.com/user-attachments/assets/02bc9cc1-d5ff-4c4f-9377-ec1a0f8b3623)
 
 #### Step 5.3.2: Mel-Spectrogram RNN
-Loss: 1.2086
-Accuracy: 0.5283
+![image](https://github.com/user-attachments/assets/69025951-e903-477a-8953-218d32a6eac0)
 
 ### Step 5.4: Dense
 #### Step 5.4.1: Dense CNN
