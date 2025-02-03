@@ -69,3 +69,84 @@ The integration of MFCC, STFT, and Mel Spectrogram into a single dense feature s
 It's important to establish reliable metrics for evaluating the effectiveness of CNN and RNN models in classifying lung pathologies. Given that most respiratory patterns are within the normal range, and considering the differing implications of false positives and negatives, the F1 score emerges as  metric for this task. This metric is particularly valuable when one classification category is more prevalent than others, and when there are distinct costs associated with false positives and false negatives.
 
 During the training phase, the loss function employed was sparse categorical cross-entropy. This choice is good for multi-class categorization scenarios as it evaluates the accuracy of the model by comparing the actual categorization (ground truth) against the predicted probability distribution across all classes. This loss function is important in fine-tuning the models, especially in complex tasks like lung pathology classification, where the distinction between different categories is subtle yet critical for accurate diagnosis.
+
+# Results and Discussion
+
+## Step 1: Data Importing
+This step creates a dataframe with start, end, (cycle start end) crackles, wheezes, pid, and filename
+
+## Step 2: Data Preprocessing
+This step splits the audio into cycles and updates the dataframe with the new filenames. In order to split up audio, we must choose a standard length for all audio samples, however a sample too large would be difficult to process and a sample too small may eliminate too much data. We chose 6 seconds as a standard length for all audio samples.
+
+98.27 percent of cycles are less than 6 seconds long
+
+## Step 3: Data Categorization and Division
+This step adds categories to each cycle based on the presence of crackles and wheezes. The categories are as follows: none, crackles only, wheezes only, and both crackles and wheezes. The categories are added to the dataframe as a new column. Furthermore, the data is divided into training and testing sets based on each category. As seen in the "Category Distribution" figure, the dataset is imbalanced.
+
+## Step 4: Feature Extraction and Modeling
+This creates CNN and RNN models for three different features, MFCC, STFT, and Mel-Spectrogram which are all ways of compressing audio information. Furthermore, this step creates a dense network, combining all three features into a singular CNN and RNN models.
+
+### Step 4.1: Mel-Frequency Cepstral Coefficients (MFCC)
+[MFCC visualization details]
+
+### Step 4.2: Short-Time Fourier Transform (STFT)
+[STFT visualization details]
+
+### Step 4.3: Mel-Spectrogram
+[Mel-Spectrogram visualization details]
+
+## Step 5: Data Training
+This step uses the models created in step 4 and trains them on the training data. The training data is then tested on the testing data and the results are plotted.
+
+### Step 5.1: MFCC
+#### Step 5.1.1: MFCC CNN
+Loss: 0.9992
+Accuracy: 0.5855
+
+#### Step 5.1.2: MFCC RNN
+Loss: 1.0413
+Accuracy: 0.5746
+
+### Step 5.2: STFT
+#### Step 5.2.1: STFT CNN
+Loss: 1.1442
+Accuracy: 0.5283
+
+#### Step 5.2.2: STFT RNN
+Loss: 1.0234
+Accuracy: 0.5522
+
+### Step 5.3: Mel
+#### Step 5.3.1: Mel-Spectrogram CNN
+Loss: 1.1045
+Accuracy: 0.5326
+
+#### Step 5.3.2: Mel-Spectrogram RNN
+Loss: 1.2086
+Accuracy: 0.5283
+
+### Step 5.4: Dense
+#### Step 5.4.1: Dense CNN
+Loss: 0.8178
+Accuracy: 0.6841
+
+#### Step 5.4.2: Dense RNN
+Loss: 1.0435
+Accuracy: 0.5616
+
+#### Step 5.4.3: Dense Combined
+Loss: 0.8584
+Accuracy: 0.7080
+
+## Conclusion
+When running each feature individually both RNN and CNN perform similarly between around 50-60% accuracy. When combining all three features and running Dense CNN and Dense RNN, we see quite different results. CNN performs significantly better at 68% accuracy whereas RNN doesn't see any improvement at 56%. Taking a look at the classification metrics of Dense RNN, we see an empty 'Both' class. This is due to overfitting of our features as we don't have enough audio samples where both crackles and wheezes are present which explains the difference in loss incurred by RNN when comparing it to Dense CNN and Dense Combined.
+
+Our attempt at resolving this issue by simple oversampling the data to have equal proportions of all four categories skewed the results more significantly than adhering to the real world distribution. This is also the reason RNN isn't necessarily a great fit for our use case, and why CNN is the most commonly used method for audio classification models. Dense Combined, which is both CNN and RNN using all three features, scores the highest at 70% accuracy, just slightly above CNN. It's important to note that on average when training the data, Dense Combined did normally perform worse than Dense CNN. However, as training the model takes a significant amount of time given the size of the data, we were unable to get an average of these values and this is the most recent iteration our of testing and debugging. Even though Dense Combined scored the highest in accuracy, we can confidently conclude that the best method is Dense CNN. Given Dense RNN's low accuracy and high loss, we'd likely be able to get the best results from tweaking hyperparameters and other factors using CNN, as RNN would likely only contribute to higher loss values.
+
+## Ways to Improve the Model
+
+1. **Synthetic Overfitting for Unbalanced Data**: We previously attempted simple oversampling to balance our dataset, which did not yield the desired results. A better approach would involve synthetic overfitting, using techniques like SMOTE (Synthetic Minority Over-sampling Technique) to generate synthetic examples in the dataset. This method could help in creating a more balanced dataset, thereby improving the model's ability to learn from under-represented classes without the distortion that often accompanies simple oversampling.
+
+2. **Hyperparameter Tuning**: Optimizing hyperparameters is another important area for improvement. By systematically experimenting with various combinations of learning rates, dropout rates, and number of layers, we can fine-tune our models to achieve better performance. Hyperparameter tuning can be especially impactful in deep learning models like CNNs, where small adjustments can lead to significant changes in model efficacy.
+
+3. **Enhanced Data Cleaning and Preprocessing**: Further refining our data cleaning and preprocessing steps can also contribute to model improvement. Techniques such as data smoothing can help in reducing noise and making patterns in the data more discernible for the models. This step is particularly important in the context of lung pathology classification, where subtle differences in audio patterns can be indicative of different conditions.
