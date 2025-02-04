@@ -4,6 +4,36 @@ Lung auscultation, the process of listening to breath sounds, requires subjectiv
 ## Problem Definition
 Currently, the identification of lung sounds is a subjective process that varies by clinicians. Doctors with increased experience in the field may be more accurate at identifying these sounds. This project aims to provide a sound classification model that will level the playing field among doctors and increase the specificity and sensitivity of lung auscultation. Our goal is to identify crackles and wheezes from audio files of breathing in order to build a model that is capable of aiding in diagnosing patients.
 
+## Dataset
+The dataset used in this project is the **[Respiratory Sound Database](https://www.kaggle.com/datasets/vbookshelf/respiratory-sound-database/data)**, which contains annotated respiratory sound recordings collected for research purposes. Below is an overview of the dataset and its significance:
+
+#### Overview
+This dataset is a collection of respiratory sounds recorded from 126 patients, spanning all age groups (children, adults, and the elderly). The recordings are annotated and include both clean respiratory sounds and noisy recordings that simulate real-life conditions. The dataset is designed to support research in respiratory health and the development of machine learning models for diagnosing respiratory disorders.
+
+#### Key Features
+- **Recordings**: 920 audio files (`.wav` format) with varying lengths (10 to 90 seconds).
+- **Annotations**: Each recording is accompanied by a `.txt` file containing annotations for respiratory cycles, crackles, and wheezes.
+- **Diagnosis**: A text file listing the diagnosis for each patient is included.
+- **Demographics**: Demographic information (e.g., age, gender) for each patient is provided.
+- **File Naming**: A text file explains the naming convention used for the audio and annotation files.
+
+#### Dataset Statistics
+- **Total Recordings**: 920
+- **Total Respiratory Cycles**: 6,898
+  - Cycles with **crackles**: 1,864
+  - Cycles with **wheezes**: 886
+  - Cycles with **both crackles and wheezes**: 506
+- **Total Duration**: 5.5 hours
+
+#### Applications
+This dataset is particularly useful for:
+- Developing machine learning models to detect respiratory disorders such as asthma, pneumonia, and chronic obstructive pulmonary disease (COPD).
+- Studying the characteristics of respiratory sounds, including crackles and wheezes.
+- Simulating real-world conditions by including noisy recordings.
+
+#### Access
+The dataset is available on [Kaggle](https://www.kaggle.com/datasets/vbookshelf/respiratory-sound-database/data).
+
 ## Methods
 For our methods, we'll employ two supervised algorithms CNN & RNN in order to get the most accurate results by comparing the two method's outputs. CNNs are highly efficient at extracting spatial hierarchies of features from data, which makes them ideal for processing spectrograms or MFCCs derived from lung sounds. Their ability to detect and learn patterns like crackles and wheezes from these representations is a significant advantage. RNNs, and particularly their variants like LSTM, excel in processing sequential and time-series data. They are capable of capturing the temporal dynamics and long-term dependencies in lung sounds, potentially providing a more nuanced understanding of the patterns in breathing. By comparing and contrasting the results from both models, we aim to leverage the spatial feature detection prowess of CNNs and the temporal pattern recognition capabilities of RNNs. This dual approach may provide a more comprehensive and accurate tool for clinicians in the diagnosis of lung pathologies.
 
